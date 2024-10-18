@@ -40,7 +40,7 @@ Verify data from API and DB
     [Documentation]    ตรวจสอบข้อมูลจาก API เปรียบเทียบกับ DB
     FOR    ${product}    IN    @{api_response['products']}
         ${matching_db_product}=    Evaluate    [item for item in ${db_response} if item['id'] == ${product['id']}]
-        Should Be Equal    ${product['name']}    ${matching_db_product[0]['name']}
+        Run Keyword And Continue On Failure    Should Be Equal    ${product['name']}    ${matching_db_product[0]['name']}
     END
 
 Set Product name
@@ -61,7 +61,6 @@ Get Product name From Database
     ${db_data}=    Query    ${query}
     Set Suite Variable    ${db_response}    ${db_data}
     Disconnect From Database
-
 
 
 Set Data to Add    
@@ -103,8 +102,8 @@ Get Cart Data From Database
 Verify Product Added To Database
     [Documentation]    ตรวจสอบข้อมูลที่เพิ่มขึ้นมาใน Database
     ${matching_db_product}=    Evaluate    ${db_response}[0]
-    Should Be Equal    ${matching_db_product['product_id']}    ${product_id}
-    Should Be Equal    ${matching_db_product['quantity']}    ${quantity}
+    Run Keyword And Continue On Failure    Should Be Equal    ${matching_db_product['product_id']}    ${product_id}
+    Run Keyword And Continue On Failure    Should Be Equal    ${matching_db_product['quantity']}    ${quantity}
     Log    สินค้า    ${product_id}    ถูกเพิ่มขึ้นมา    ${quantity}    หน่วย
 
 
@@ -138,8 +137,8 @@ Verify Cart Items From API and DB
     ${db_cart_items}=    Evaluate    [item for item in ${db_response}]
     FOR    ${api_item}    IN    @{api_cart_items}
         ${matching_db_item}=    Evaluate    [item for item in ${db_cart_items} if item['product_id'] == ${api_item['product_id']}]
-        Should Be Equal    ${api_item['product_id']}    ${matching_db_item[0]['product_id']}
-        Should Be Equal    ${api_item['quantity']}    ${matching_db_item[0]['quantity']}
+        Run Keyword And Continue On Failure    Should Be Equal    ${api_item['product_id']}    ${matching_db_item[0]['product_id']}
+        Run Keyword And Continue On Failure    Should Be Equal    ${api_item['quantity']}    ${matching_db_item[0]['quantity']}
     END
     Log    รายการสินค้าในตะกร้าสินค้าถูกต้อง
 
@@ -178,5 +177,5 @@ Get User Cart Items After Remove From DB
 Verify Database After Removed Items
     [Documentation]    Verify that the item has been removed from the user's cart in the database
     ${db_cart_items}=    Evaluate    [item for item in ${db_response}]
-    Should Be Empty    ${db_cart_items}    
+    Should Be Empty    ${db_cart_items}    " "
     Log    สินค้าถูกลบออกจากตะกร้าของผู้ใช้แล้ว
