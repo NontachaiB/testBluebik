@@ -119,6 +119,6 @@ TC05 ทดสอบการเรียก API เพื่อลบสิน�
 
 
 
-#py -m robot -d report -i TC01 test_no1.robot  
-#py -m robot -d report -e test_no1.robot
-#py -m robot -d report test_no1.robot
+#py -m robot -d report -i TC01 test_Robot.robot  
+#py -m robot -d report -e test_Robot.robot
+#py -m robot -d report test_Robot.robot
